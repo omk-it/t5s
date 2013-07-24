@@ -5,7 +5,7 @@
 //  Created by Admin on 6/13/13.
 //  Copyright (c) 2013 Admin. All rights reserved.
 //
-
+#define DOCUMENTS [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject]
 #import "ScanAppDelegate.h"
 
 #import "ScanViewController.h"
@@ -14,6 +14,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    NSString *filePathBundleXML = [[NSBundle mainBundle] pathForResource:@"menu"ofType:@"xml"];
+    NSData *xmlData = [NSData dataWithContentsOfFile:filePathBundleXML];
+    
+    NSString *filePathDocXML = [DOCUMENTS stringByAppendingPathComponent:@"menu.xml"];
+	[xmlData writeToFile:filePathDocXML atomically:YES];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.viewController = [[ScanViewController alloc] initWithNibName:@"ScanViewController" bundle:nil];
@@ -49,4 +54,16 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+-(BOOL) application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    
+//    NSLog(@"File path:%@\nFrom: %@\nAnnotation:%@", url, sourceApplication, annotation);
+//    
+//    NSString *content = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
+//    
+//    NSLog(@"File content:\n%@", content);
+    
+    return YES;
+}
+
 @end
+
